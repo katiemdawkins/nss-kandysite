@@ -5,3 +5,11 @@ p {
     font-weight: bolder;
     font-size: 16px;
 }
+
+h2{
+    background-color: aliceblue;
+    padding:3px;
+    margin-bottom: 0;
+    color:rgb(245, 48, 81);
+    font-size: 32px;
+}
