@@ -4,6 +4,7 @@ import { EmployeeList } from "./employees/EmployeeList"
 import { HiringForm } from "./employees/HiringForm"
 import { LocationsList } from "./locations/LocationsList"
 import { ProductList } from "./products/ProductList"
+import { CustomerList } from "./customers/CustomerList"
 
 
 //when a user clicks on a hyperlink in the nav bar this code dictates which component should be rendered 
@@ -23,6 +24,9 @@ export const ApplicationViews = () => {
             </Route>
             <Route path="/hiring/employees">
                 <EmployeeList />
+            </Route>
+            <Route path="/customers">
+                <CustomerList />
             </Route>
         </>
     )
