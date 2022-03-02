@@ -1,8 +1,16 @@
+import { isStatement } from "@babel/types"
 import React, { useEffect, useState } from "react"
+import { useHistory, useParams } from "react-router"
 import "./Products.css"
 
 export const ProductList = () => {
     const [products, setProducts] = useState([])
+
+    //user is purchasing items so we need an object to hold purchase details
+    const [ purchase, setPurchase] = useState({})
+
+    
+    const history = useHistory()
 
     useEffect(
         ()=>{
@@ -15,6 +23,46 @@ export const ProductList = () => {
         []
     )
 
+    //fetch the product being purchased 
+    useEffect(
+        () =>{
+            fetch(`http://localhost:8088/customerPurchases`)
+            .then( res => res.json())
+            .then((data)=> {
+                setPurchase(data)
+            })
+        },
+        []
+    )
+
+
+
+//when a customer purchases an item, we need to create a new purchase object 
+    const purchaseItem = () => {
+
+//purchase object
+        const newPurchase = {
+            customerId: parseInt(localStorage.getItem("kandy_customer")),
+            locationId: purchase.locationId,
+            productId: purchase.productId,
+            date: ""
+        }
+
+//posting the new purchase object in customerPurchases API
+        const fetchOption = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newPurchase)
+        }
+        return fetch (`http://localhost:8088/customerPurchases`, fetchOption)
+            .then(()=>{
+                history.push("/products")
+            })
+
+    }
+
     return (
         <>
             {
@@ -22,6 +70,7 @@ export const ProductList = () => {
                     (product) => {
                         return <div key ={`product--${product.id}`}>
                                 <p>{product.candyName}, {product.productType.typeOfCandy}: ${product.price}</p>
+                                <button onClick={ purchaseItem } className="btn btn-primary">Purchase</button>
                         </div>
                     }
                 )

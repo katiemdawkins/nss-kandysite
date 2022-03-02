@@ -1,0 +1,9 @@
+fieldset{
+    background-color:rgb(118, 252, 252) ;
+    border: solid rgb(235, 12, 86) 2px;
+}
+
+.link--register {
+    background-color: rgb(118, 252, 252);
+    text-align: center;
+}
