@@ -5,50 +5,34 @@ import "./Products.css"
 
 export const ProductList = () => {
     const [products, setProducts] = useState([])
-
-    //user is purchasing items so we need an object to hold purchase details
-    const [ purchase, setPurchase] = useState({})
-
-    
     const history = useHistory()
 
+    //fetch products
     useEffect(
         ()=>{
-            fetch("http://localhost:8088/products?_expand=productType&_sort=productTypeId&_order=desc")
+           fetch("http://localhost:8088/products?_expand=productType&_sort=productTypeId&_order=desc")
             .then( res => res.json())
             .then((data)=> {
                 setProducts(data)
             })
-        },
-        []
-    )
-
-    //fetch the product being purchased 
-    useEffect(
-        () =>{
-            fetch(`http://localhost:8088/customerPurchases`)
-            .then( res => res.json())
-            .then((data)=> {
-                setPurchase(data)
-            })
+            
         },
         []
     )
 
 
+    //when a customer purchases an item, we need to create a new purchase object 
+    const purchaseItem = (product) => {
 
-//when a customer purchases an item, we need to create a new purchase object 
-    const purchaseItem = () => {
-
-//purchase object
+        //purchase object
         const newPurchase = {
             customerId: parseInt(localStorage.getItem("kandy_customer")),
-            locationId: purchase.locationId,
-            productId: purchase.productId,
+            locationId: 4,
+            productId: product.id,
             date: ""
         }
 
-//posting the new purchase object in customerPurchases API
+    //posting the new purchase object in customerPurchases API
         const fetchOption = {
             method: "POST",
             headers: {
@@ -66,18 +50,32 @@ export const ProductList = () => {
     return (
         <>
             {
-                products.map(
-                    (product) => {
-                        return <div key ={`product--${product.id}`}>
-                                <p>{product.candyName}, {product.productType.typeOfCandy}: ${product.price}</p>
-                                <button onClick={ purchaseItem } className="btn btn-primary">Purchase</button>
-                        </div>
-                    }
-                )
+             products.map(
+                (product) => {
+                    return <div key ={`product--${product.id}`}>
+                            <p>
+                                {product.candyName}, {product.productType.typeOfCandy}: ${product.price}
+                            </p>
+                        <button 
+                            onClick={ ()=> purchaseItem(product) } 
+                            className="btn btn-primary">
+                                Purchase
+                        </button>
+                     </div>
+                }
+            )
             }
         </>
     )
 }
+
+
+
+
+
+
+
+
 
 //useState and use effect are "hooks" aka functions, they are built in to react 
 

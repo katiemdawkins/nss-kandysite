@@ -1,0 +1,11 @@
+h3{
+    background-color:rgb(118, 252, 252) ;
+    border: solid rgb(235, 12, 86) 2px;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+p{
+    border: solid rgb(235, 12, 86) 2px;
+    border-top: none;
+}
