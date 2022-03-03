@@ -1,16 +1,16 @@
 import React, { useState, useEffect} from "react";
 import "./MyOrders.css"
+import { getAllOrders } from "../ApiManager";
 
 export const MyOrder = () => {
     const [customerPurchases, getCustomerPurchases] = useState([])
 
     useEffect (
         () =>{
-            fetch("http://localhost:8088/customerPurchases?_expand=product&_expand=location&_expand=customer")
-            .then(res => res.json())
+            getAllOrders()
             .then(
-                (data) =>{
-                    getCustomerPurchases(data)
+                (orders) =>{
+                    getCustomerPurchases(orders)
                 }
             )
         },

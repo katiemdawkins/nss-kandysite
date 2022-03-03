@@ -1,30 +1,30 @@
 import React, { useState, useEffect} from "react";
+import { getAllEmployees } from "../ApiManager";
+import { fireEmployee } from "../ApiManager";
 
 export const EmployeeList = () =>{ 
-    const [employees, setEmployee]= useState([])
+    const [employees, setEmployees]= useState([])
 
 
-    const getState = () =>{
-        fetch("http://localhost:8088/employees?_expand=location")
-            .then(res => res.json())
-            .then ((data) => {
-                setEmployee(data)
+    const employeeState = () =>{
+            getAllEmployees()
+            .then (
+                (employees) => {
+                setEmployees(employees)
             })
     }
     useEffect(
         () =>{
-            getState()
+            employeeState()
         },
         []
     )
 
-    const fireEmployee =(id) => {
-        fetch(`http://localhost:8088/employees/${id}`, {
-            method: "DELETE"
+    const fireTheTheif =(id) => {
+        return fireEmployee(id)
+            .then((data)=>{
+            employeeState(data)
         })
-       .then((data)=>{
-           getState(data)
-       })
     }
 
     return (
@@ -35,7 +35,7 @@ export const EmployeeList = () =>{
                         return <div key={`employee--${employee.id}`}>
                                 <p>{employee.name} works at {employee.location.name}</p>
                                 <button onClick={()=>{
-                                    fireEmployee(employee.id)
+                                    fireTheTheif(employee.id)
                                 }}>Fire Employee</button>
                             </div>
                     }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import "./employees.css"
 import Select from "react-select"
+import { getAllLocations } from "../ApiManager"
 
 export const HiringForm = () => {
     const [form, updateForm] = useState({
@@ -18,8 +19,7 @@ export const HiringForm = () => {
 
     useEffect(
         ()=>{
-            fetch ("http://localhost:8088/locations")
-            .then (res => res.json())
+            getAllLocations()
             .then ((locationsArray) =>{
                 setLocations(locationsArray)
             })

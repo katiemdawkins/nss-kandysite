@@ -2,6 +2,7 @@ import { isStatement } from "@babel/types"
 import React, { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import "./Products.css"
+import { getAllProducts } from "../ApiManager"
 
 export const ProductList = () => {
     const [products, setProducts] = useState([])
@@ -10,10 +11,10 @@ export const ProductList = () => {
     //fetch products
     useEffect(
         ()=>{
-           fetch("http://localhost:8088/products?_expand=productType&_sort=productTypeId&_order=desc")
-            .then( res => res.json())
-            .then((data)=> {
-                setProducts(data)
+           getAllProducts()
+            .then(
+                (products)=> {
+                setProducts(products)
             })
             
         },
