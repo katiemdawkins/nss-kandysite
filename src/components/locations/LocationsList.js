@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
 import "./Locations.css"
+import { getAllLocations } from "../ApiManager"
 
 export const LocationsList = () => {
     const [locations, setLocations] = useState([])
 
     useEffect(
         ()=>{
-            fetch ("http://localhost:8088/locations")
-            .then (res => res.json())
+            getAllLocations()
             .then ((locationsArray) =>{
                 setLocations(locationsArray)
             })

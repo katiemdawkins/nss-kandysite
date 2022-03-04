@@ -1,5 +1,6 @@
 import React from "react"
 
+
 export const getAllEmployees = () =>{
     return fetch("http://localhost:8088/employees?_expand=location")
         .then(res => res.json())
@@ -30,3 +31,28 @@ export const getAllLocations = () => {
     return fetch ("http://localhost:8088/locations")
         .then (res => res.json())
 }
+
+export const sendPurchase = (newPurchase) =>{
+    const fetchOption = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newPurchase)
+    }
+    return fetch (`http://localhost:8088/customerPurchases`, fetchOption)
+
+}
+
+export const sendForm = (newForm) => {
+    const fetchOption = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newForm)
+    }
+    
+    return fetch("http://localhost:8088/employees", fetchOption)
+}
+

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import "./employees.css"
 import Select from "react-select"
-import { getAllLocations } from "../ApiManager"
+import { getAllLocations, sendForm } from "../ApiManager"
 
 export const HiringForm = () => {
     const [form, updateForm] = useState({
@@ -13,9 +13,10 @@ export const HiringForm = () => {
         hourlyRate: 15
     })
 
-    const history = useHistory()
+    
 
     const [locations, setLocations] = useState([])
+    const history = useHistory()
 
     useEffect(
         ()=>{
@@ -37,14 +38,8 @@ export const HiringForm = () => {
             fullTime: form.fullTime,
             hourlyRate: form.hourlyRate
         }
-        const fetchOption = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newForm)
-        }
-        return fetch("http://localhost:8088/employees", fetchOption)
+        
+       sendForm(newForm)
         .then (() => {
             history.push("/hiring/employees")
         })

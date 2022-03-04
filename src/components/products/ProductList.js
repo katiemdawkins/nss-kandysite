@@ -2,7 +2,7 @@ import { isStatement } from "@babel/types"
 import React, { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import "./Products.css"
-import { getAllProducts } from "../ApiManager"
+import { getAllProducts, sendPurchase } from "../ApiManager"
 
 export const ProductList = () => {
     const [products, setProducts] = useState([])
@@ -34,14 +34,7 @@ export const ProductList = () => {
         }
 
     //posting the new purchase object in customerPurchases API
-        const fetchOption = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newPurchase)
-        }
-        return fetch (`http://localhost:8088/customerPurchases`, fetchOption)
+        sendPurchase(newPurchase)
             .then(()=>{
                 history.push("/products")
             })
